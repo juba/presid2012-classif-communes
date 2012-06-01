@@ -1,5 +1,6 @@
+######################################################################
 ####Fonctions
-
+######################################################################
 
 ## Affiche la répartition des votes pour les différents groupes
 ## pour un candidat sous forme de boxplot et de violin plot

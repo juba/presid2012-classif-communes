@@ -1,4 +1,7 @@
+######################################################################
 ####Extensions
+######################################################################
+
 
 library(stringr)
 library(ggplot2)
@@ -10,7 +13,10 @@ library(reshape2)
 ## Chargement des fonctions
 source("fonctions.R")
 
+
+######################################################################
 ####Chargement des données et recodages
+######################################################################
 
 ## Chargement du fichier source brut
 ds <- read.csv("data/source.csv")
@@ -59,10 +65,14 @@ for (nom in noms) {
 
 
 
+######################################################################
 ####Classification sur données brutes
+######################################################################
 
 
 #####Calcul de la classification
+######################################################################
+
 
 vars <- c("abst","blancs","joly","lepen","sarkozy","melenchon","poutou",
           "arthaud","cheminade","bayrou","dupont_aignan","hollande")
@@ -85,7 +95,10 @@ load("ec2/out/hc_brut_ward.rda")
 ## Affichage du dendrogramme
 plclust(hc.brut.ward,labels=FALSE,hang=0)
 
+
 #####Choix du nombre de classes
+######################################################################
+
 
 ## Le code suivant génère des graphiques décrivant les écarts à la moyenne
 ## pour les différentes variables pour chaque groupe, pour l'ensemble des classifications
@@ -113,6 +126,8 @@ table(groupes.brut)
 
 
 #####Description des classes
+######################################################################
+
 
 vars <- c("lepen","sarkozy","dupont_aignan","bayrou","hollande",
           "joly","melenchon","poutou","arthaud","cheminade",
@@ -151,7 +166,9 @@ for (groupe in 1:nb.classes.brut) {
 }
 
 
+######################################################################
 ####Export pour Fusion tables
+######################################################################
 
 ## On charge le fichier rgc.rda, qui contient un data frame
 ## nommé com.points contenant des données pour les communes
@@ -213,7 +230,10 @@ write.csv(geo, file="out/export_fusion_table.csv")
 ## </div>
 
 
+
+######################################################################
 ####Cartographie
+######################################################################
 
 ## Export des cartes de répartition des communes des différents groupes
 
