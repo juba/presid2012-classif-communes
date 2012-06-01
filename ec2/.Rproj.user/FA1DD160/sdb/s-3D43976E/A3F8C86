@@ -1,0 +1,15 @@
+{
+    "contents" : "library(flashClust)\n\n## NORMEE\n\nload(\"in/tmp_normee.rda\")\n\ndist.n <- dist(tmp.n)\n\nhc.n.ward <- hclust(dist.n,method=\"ward\")\nsave(hc.n.ward, file=\"out/hc_n_ward.rda\")\nrm(hc.n.ward)\ngc()\n\n# hc.n.single <- hclust(dist.n,method=\"single\")\n# save(hc.n.single, file=\"out/hc_n_single.rda\")\n# rm(hc.n.single)\n# gc()\n# \n# hc.n.complete <- hclust(dist.n,method=\"complete\")\n# save(hc.n.complete, file=\"out/hc_n_complete.rda\")\n# rm(hc.n.complete)\n# gc()\n# \n# hc.n.average <- hclust(dist.n,method=\"average\")\n# save(hc.n.average, file=\"out/hc_n_average.rda\")\n# rm(hc.n.average)\n# gc()\n# \n# hc.n.mcquitty <- hclust(dist.n,method=\"mcquitty\")\n# save(hc.n.mcquitty, file=\"out/hc_n_mcquitty.rda\")\n# rm(hc.n.mcquitty)\n# gc()\n# \n# hc.n.median <- hclust(dist.n,method=\"median\")\n# save(hc.n.median, file=\"out/hc_n_median.rda\")\n# rm(hc.n.median)\n# gc()\n# \n# hc.n.centroid <- hclust(dist.n,method=\"centroid\")\n# save(hc.n.centroid, file=\"out/hc_n_centroid.rda\")\n# rm(hc.n.centroid)\n# gc()\n\n\n\n## NON NORMEE\n\nrm(tmp.n)\nrm(dist.n)\ngc()\n\nload(\"in/tmp_non_normee.rda\")\n\ndist.nn <- dist(tmp.nn)\n\nhc.nn.ward <- hclust(dist.nn,method=\"ward\")\nsave(hc.nn.ward, file=\"out/hc_nn_ward.rda\")\nrm(hc.nn.ward)\ngc()\n\n# hc.nn.single <- hclust(dist.nn,method=\"single\")\n# save(hc.nn.single, file=\"out/hc_nn_single.rda\")\n# rm(hc.nn.single)\n# gc()\n# \n# hc.nn.complete <- hclust(dist.nn,method=\"complete\")\n# save(hc.nn.complete, file=\"out/hc_nn_complete.rda\")\n# rm(hc.nn.complete)\n# gc()\n# \n# hc.nn.average <- hclust(dist.nn,method=\"average\")\n# save(hc.nn.average, file=\"out/hc_nn_average.rda\")\n# rm(hc.nn.average)\n# gc()\n# \n# hc.nn.mcquitty <- hclust(dist.nn,method=\"mcquitty\")\n# save(hc.nn.mcquitty, file=\"out/hc_nn_mcquitty.rda\")\n# rm(hc.nn.mcquity)\n# gc()\n# \n# hc.nn.median <- hclust(dist.nn,method=\"median\")\n# save(hc.nn.median, file=\"out/hc_nn_median.rda\")\n# rm(hc.nn.median)\n# gc()\n# \n# hc.nn.centroid <- hclust(dist.nn,method=\"centroid\")\n# save(hc.nn.centroid, file=\"out/hc_nn_centroid.rda\")\n# rm(hc.nn.centroid)\n# gc()\n\n\n",
+    "created" : 1337524570446.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3430134748",
+    "id" : "A3F8C86",
+    "lastKnownWriteTime" : 1337387553,
+    "path" : "~/r/presid2012/ec2/travail.r",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

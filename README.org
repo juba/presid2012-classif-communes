@@ -1,0 +1,2 @@
+Essai de classification des communes de France selon les votes au premier tour
+de l'élection présidentielle.
