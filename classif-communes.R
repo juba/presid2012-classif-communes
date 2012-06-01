@@ -170,10 +170,10 @@ for (groupe in 1:nb.classes.brut) {
 ####Export pour Fusion tables
 ######################################################################
 
-## On charge le fichier rgc.rda, qui contient un data frame
-## nommé com.points contenant des données pour les communes
+## On charge le fichier rgc.csv, qui contient des données pour les communes
 ## de France tirées du RGC.
-load(file = "data/rgc.rda") ## com.points
+
+rgc <- read.csv("data/rgc.csv")
   
 tmp.rgc <- rgc[,c("id","long","lat")]
 tmp.d <- d[,c("nom","id.com", vars)]
