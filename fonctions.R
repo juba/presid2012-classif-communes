@@ -81,9 +81,9 @@ groupes.density <- function(df, groupe) {
     facet_grid(variable~., scales="free") +
     scale_x_continuous(limits=c(-23,23), name="Écart à la moyenne nationale") +
     scale_y_continuous(breaks=NULL, name="") +
-    opts(legend.position="none", strip.text.y=theme_text()) +
+    opts(legend.position="none", strip.text.y=theme_text(size=16)) +
     opts(title=paste("Groupe", groupe, sep=" "), plot.margin=unit(c(2, 1, 2, 0), "lines")) +
-    opts(axis.title.x=theme_text(vjust=-1), plot.title=theme_text(vjust=2, size=14))
+    opts(axis.title.x=theme_text(vjust=-1,size=16), plot.title=theme_text(vjust=2, size=20))
 }
 
 

@@ -165,6 +165,14 @@ for (groupe in 1:nb.classes.brut) {
   dev.off()
 }
 
+## Export d'un graphe de comparaison de densités pour chaque groupe au format
+## SVG
+for (groupe in 1:nb.classes.brut) {
+  svg(filename=paste("out/densites_groupe",groupe,".svg",sep=""))
+  print(groupes.density(dvm, groupe=groupe))
+  dev.off()
+}
+
 
 ######################################################################
 ####Export pour Fusion tables
@@ -236,10 +244,16 @@ write.csv(geo, file="out/export_fusion_table.csv")
 ######################################################################
 
 ## Export des cartes de répartition des communes des différents groupes
-
 for (groupe in 1:nb.classes.brut) {
   png(file=paste("out/carte_groupe",groupe,".png",sep=""))
   print(groupe.carte(geo, groupe=groupe, couleurs))
   dev.off()
 }
 
+## Export des cartes de répartition des communes des différents groupes
+## au format SVG
+for (groupe in 1:nb.classes.brut) {
+  svg(filename=paste("out/carte_groupe",groupe,".svg",sep=""))
+  print(groupe.carte(geo, groupe=groupe, couleurs))
+  dev.off()
+}
