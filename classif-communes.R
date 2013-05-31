@@ -47,10 +47,10 @@ d$voix.cheminade <- ds$Voix.6
 d$voix.bayrou <- ds$Voix.7
 d$voix.dupont_aignan <- ds$Voix.8
 d$voix.hollande <- ds$Voix.9
-  
+
 ## Suppression des Collectivités d'outre-mer et français de l'étranger
 ## on ne garde que les DOM
-d <- d[!(d$dpt %in% c("ZN","ZP","ZS","ZW","ZX","ZZ")),]  
+d <- d[!(d$dpt %in% c("ZA","ZB","ZC","ZD","ZM","ZN","ZP","ZS","ZW","ZX","ZZ")),]  
 
 ## Suppression des 3 communes annulées par le conseil constitutionnel
 d <- d[!(rownames(d) %in% c("10.Pont-sur-Seine","31.Bourg-d'Oueil","43.Lissac")),]
@@ -66,7 +66,7 @@ for (nom in noms) {
 
 
 ######################################################################
-####Classification sur données brutes
+####Classification
 ######################################################################
 
 
@@ -78,19 +78,10 @@ vars <- c("abst","blancs","joly","lepen","sarkozy","melenchon","poutou",
           "arthaud","cheminade","bayrou","dupont_aignan","hollande")
 tmp.brut <- d[,vars]
 
-save(tmp.brut, file="ec2/in/tmp_brut.rda")
-
-## Calcul de la classification, exécuté sur une instance EC2 a
-## avec 32Go de RAM. Voir ec2/travail.R
-
-##library(flashClust)
-##load("in/tmp_brut.rda")
-##dist.brut <- dist(tmp.brut)
-##hc.brut.ward <- hclust(dist.brut,method="ward")
-##save(hc.brut.ward, file="out/hc_brut_ward.rda")
-
-## Chargement du résultat du calcul
-load("ec2/out/hc_brut_ward.rda")
+library(flashClust)
+dist.brut <- dist(tmp.brut)
+hc.brut.ward <- hclust(dist.brut,method="ward")
+save(hc.brut.ward, file="out/hc_brut_ward.rda")
 
 ## Affichage du dendrogramme
 plclust(hc.brut.ward,labels=FALSE,hang=0)
@@ -115,8 +106,8 @@ plclust(hc.brut.ward,labels=FALSE,hang=0)
 ## }
 
 
-## On conserve 9 classes
-nb.classes.brut <- 9
+## On conserve 8 classes
+nb.classes.brut <- 8
 
 ## Calcul des groupes
 groupes.brut <- factor(cutree(hc.brut.ward, k=nb.classes.brut))
@@ -142,12 +133,14 @@ labels <- c("Le Pen","Sarkozy","Dupont-Aignan","Bayrou","Hollande",
 
 m.brut <- diffmatrix(vars, groupes.brut, seuil=0.001, levels=vars, labels=labels)
 
+png(file="out/ccp_diffmatrix.png", width=600, height=500)
 diffmatrix.plot(m.brut, seuil.diff=0.5,
                 levels=vars, labels=labels,
-                title=paste("Brute", "Ward", nb.classes.brut, sep=" - "))
+                title="Caractérisation des groupes")
+dev.off()
 
 ## Répartition du vote Le Pen dans les différents groupes
-grplot("lepen", groupes.brut)
+# grplot("lepen", groupes.brut)
 
 ## Calcul des variables centrées (on leur soustrait
 ## leur moyenne nationale)
@@ -160,7 +153,7 @@ dvm <- melt(dv)
 
 ## Export d'un graphe de comparaison de densités pour chaque groupe
 for (groupe in 1:nb.classes.brut) {
-  png(file=paste("out/densites_groupe",groupe,".png",sep=""))
+  png(file=paste("out/ccp_densites_groupe",groupe,".png",sep=""),width=400,height=400)
   print(groupes.density(dvm, groupe=groupe))
   dev.off()
 }
@@ -168,7 +161,7 @@ for (groupe in 1:nb.classes.brut) {
 ## Export d'un graphe de comparaison de densités pour chaque groupe au format
 ## SVG
 for (groupe in 1:nb.classes.brut) {
-  svg(filename=paste("out/densites_groupe",groupe,".svg",sep=""))
+  svg(filename=paste("out/ccp_densites_groupe",groupe,".svg",sep=""))
   print(groupes.density(dvm, groupe=groupe))
   dev.off()
 }
@@ -192,25 +185,15 @@ geo <- merge(tmp.rgc, tmp.d, by.x="id", by.y="id.com", all.x=FALSE, all.y=FALSE)
 
 ## Noms des marqueurs pour les différents groupes
 geo$marker[geo$groupes==1] <- "ltblu_circle"
-geo$marker[geo$groupes==2] <- "purple_circle"
+geo$marker[geo$groupes==2] <- "wht_circle"
 geo$marker[geo$groupes==3] <- "grn_circle"
 geo$marker[geo$groupes==4] <- "red_circle"
 geo$marker[geo$groupes==5] <- "orange_circle"
 geo$marker[geo$groupes==6] <- "pink_circle"
 geo$marker[geo$groupes==7] <- "ylw_circle"
 geo$marker[geo$groupes==8] <- "blu_circle"
-geo$marker[geo$groupes==9] <- "wht_circle"
 
-couleurs <- c("#55D7D7",
-              "#7E55FC",
-              "#00E93C",
-              "#FC6355",
-              "#FF9C00",
-              "#E14D9C",
-              "#FCF457",
-              "#5781FC",
-              "#BBBBBB")
-              
+            
 
 ## Export CSV pour import dans Fusion table
 write.csv(geo, file="out/export_fusion_table.csv")
@@ -243,9 +226,18 @@ write.csv(geo, file="out/export_fusion_table.csv")
 ####Cartographie
 ######################################################################
 
+couleurs <- c("#55D7D7",
+              "#BBBBBB",
+              "#00E93C",
+              "#FC6355",
+              "#FF9C00",
+              "#E14D9C",
+              "#FCF457",
+              "#5781FC")
+
 ## Export des cartes de répartition des communes des différents groupes
 for (groupe in 1:nb.classes.brut) {
-  png(file=paste("out/carte_groupe",groupe,".png",sep=""))
+  png(file=paste("out/ccp_carte_groupe",groupe,".png",sep=""),width=400,height=400)
   print(groupe.carte(geo, groupe=groupe, couleurs))
   dev.off()
 }
@@ -253,7 +245,7 @@ for (groupe in 1:nb.classes.brut) {
 ## Export des cartes de répartition des communes des différents groupes
 ## au format SVG
 for (groupe in 1:nb.classes.brut) {
-  svg(filename=paste("out/carte_groupe",groupe,".svg",sep=""))
+  svg(filename=paste("out/ccp_carte_groupe",groupe,".svg",sep=""))
   print(groupe.carte(geo, groupe=groupe, couleurs))
   dev.off()
 }
