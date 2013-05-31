@@ -6,13 +6,14 @@
 ## pour un candidat sous forme de boxplot et de violin plot
 
 grplot <- function (varname, vgroupes, title="") {
-  tmp <- data.frame(groupes=vgroupes, var=d[,varname])
-  ggplot(data=tmp, aes(x=groupes, y=var))  +
-    geom_hline(yintercept=median(tmp$var), colour="red") +
-    geom_violin(aes(fill=groupes, colour=groupes)) +
-    geom_boxplot(aes(fill=groupes), outlier.colour=NA, width=0.2) +
-    opts(title=varname, legend.position="none") + xlab("Groupe") + ylab("Pourcentage") +
-    scale_fill_brewer(palette="Set3") + scale_colour_brewer(palette="Set3")
+    tmp <- data.frame(groupes=vgroupes, var=d[,varname])
+    ggplot(data=tmp, aes(x=groupes, y=var))  +
+        geom_hline(yintercept=median(tmp$var), colour="red") +
+        geom_violin(aes(fill=groupes, colour=groupes)) +
+        geom_boxplot(aes(fill=groupes), outlier.colour=NA, width=0.2) +
+        labs(title=varname) + theme(legend.position="none") +
+        xlab("Groupe") + ylab("Pourcentage") +
+        scale_fill_brewer(palette="Set3") + scale_colour_brewer(palette="Set3")
 }
 
 
@@ -54,19 +55,8 @@ diffmatrix.plot <- function(m, seuil.diff=0, levels, labels, title=NULL) {
     scale_fill_gradient2(low="blue", mid="white", high="red") +
     geom_text(aes(x=Var1, y=Var2,label=value), size=2.5) +
     scale_y_continuous(breaks=1:max(mm$Var2)) +
-    opts(axis.text.x=theme_text(angle=45,hjust=1,vjust=1)) +
-    xlab("") + ylab("Groupe") + opts(title=title)
-}
-
-## Autre représentation graphique d'une matrice calculée avec diffmatrix
-## (inutilisée)
-
-diffmatrix.barplot <- function(m) {
-  mm <- melt(m)
-  mm$Var1 <- factor(mm$Var1, levels=vars, labels=labels)
-  qplot(data=mm,x=Var1, y=value, geom="bar", stat="identity") + 
-    geom_hline(yintercept=0, colour="grey80") + 
-    facet_grid(Var2~.)
+    theme(axis.text.x=element_text(angle=45,hjust=1,vjust=1)) +
+    xlab("") + ylab("Groupe") + labs(title=title)
 }
 
 ## Affiche la répartition de la densité pour chaque variable
@@ -81,9 +71,10 @@ groupes.density <- function(df, groupe) {
     facet_grid(variable~., scales="free") +
     scale_x_continuous(limits=c(-23,23), name="Écart à la moyenne nationale") +
     scale_y_continuous(breaks=NULL, name="") +
-    opts(legend.position="none", strip.text.y=theme_text(size=16)) +
-    opts(title=paste("Groupe", groupe, sep=" "), plot.margin=unit(c(2, 1, 2, 0), "lines")) +
-    opts(axis.title.x=theme_text(vjust=-1,size=16), plot.title=theme_text(vjust=2, size=20))
+    theme(legend.position="none", strip.text.y=element_text(size=11,angle=0)) +
+    labs(title=paste("Groupe", groupe, sep=" ")) +
+    theme(plot.margin=unit(c(2, 1, 2, 0), "lines")) +
+    theme(axis.title.x=element_text(vjust=-1,size=16), plot.title=element_text(vjust=2, size=20))
 }
 
 
@@ -100,11 +91,11 @@ ggplot(data=tmp, aes(long,lat)) +
   geom_density2d(color="black") +
   theme_bw() +
   coord_map() +
-  opts(title=paste("Groupe",groupe,sep=" "),
-       legend.position="none",
-       axis.ticks = theme_blank(), 
-       axis.title.y = theme_blank(), 
-       axis.text.y =  theme_blank(),
-       axis.title.x = theme_blank(), 
-       axis.text.x =  theme_blank()) 
+  labs(title=paste("Groupe",groupe,sep=" ")) +
+  theme(legend.position="none",
+       axis.ticks = element_blank(), 
+       axis.title.y = element_blank(), 
+       axis.text.y =  element_blank(),
+       axis.title.x = element_blank(), 
+       axis.text.x =  element_blank()) 
 }
