@@ -1,3 +1,4 @@
 tmp/
 out/*
+ec2/
 .Rhistory
