@@ -109,6 +109,36 @@ for (groupe in 1:nb.classes.brut) {
 
 
 ######################################################################
+####Cartographie
+######################################################################
+
+couleurs <- c("#55D7D7",
+              "#BBBBBB",
+              "#00E93C",
+              "#FC6355",
+              "#FF9C00",
+              "#E14D9C",
+              "#FCF457",
+              "#5781FC")
+
+## Export des cartes de répartition des communes des différents groupes
+for (groupe in 1:nb.classes.brut) {
+  png(file=paste0(out.path,"ccp_carte_groupe",groupe,".png",sep=""),width=400,height=400)
+  print(groupe.carte(geo, groupe=groupe, couleurs))
+  dev.off()
+}
+
+## Export des cartes de répartition des communes des différents groupes
+## au format SVG
+## for (groupe in 1:nb.classes.brut) {
+##   svg(filename=paste("out/ccp_carte_groupe",groupe,".svg",sep=""))
+##   print(groupe.carte(geo, groupe=groupe, couleurs))
+##   dev.off()
+## }
+
+
+
+######################################################################
 ####Export pour Fusion tables
 ######################################################################
 
@@ -160,33 +190,3 @@ write.csv(geo, file="out/export_fusion_table.csv")
 ## <tr><td>Abstention</td><td>{abst}%</td></tr>
 ## </table>
 ## </div>
-
-
-
-######################################################################
-####Cartographie
-######################################################################
-
-couleurs <- c("#55D7D7",
-              "#BBBBBB",
-              "#00E93C",
-              "#FC6355",
-              "#FF9C00",
-              "#E14D9C",
-              "#FCF457",
-              "#5781FC")
-
-## Export des cartes de répartition des communes des différents groupes
-for (groupe in 1:nb.classes.brut) {
-  png(file=paste0(out.path,"ccp_carte_groupe",groupe,".png",sep=""),width=400,height=400)
-  print(groupe.carte(geo, groupe=groupe, couleurs))
-  dev.off()
-}
-
-## Export des cartes de répartition des communes des différents groupes
-## au format SVG
-## for (groupe in 1:nb.classes.brut) {
-##   svg(filename=paste("out/ccp_carte_groupe",groupe,".svg",sep=""))
-##   print(groupe.carte(geo, groupe=groupe, couleurs))
-##   dev.off()
-## }
