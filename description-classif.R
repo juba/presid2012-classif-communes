@@ -6,7 +6,6 @@
 library(stringr)
 library(ggplot2)
 library(rgrs)
-library(FactoMineR)
 library(grid)
 library(reshape2)
 
@@ -21,12 +20,15 @@ out.path <- "~/projets/data.nozav.org/images/"
 ####Chargement
 ######################################################################
 
-## Chargement du résultat de la classification.
+## Chargement des données
+load("out/d.rda") ## d
+## Chargement du résultat de la classification
 load("out/hc_brut_ward.rda") ## hc.brut.ward
 
 ## Affichage du dendrogramme
+png(file=paste0(out.path,"ccp_dendro.png"),width=600,height=500)
 plclust(hc.brut.ward,labels=FALSE,hang=0)
-
+dev.off()
 
 #####Choix du nombre de classes
 ######################################################################
