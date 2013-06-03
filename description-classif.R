@@ -88,7 +88,8 @@ dev.off()
 ## Calcul des variables centrées (on leur soustrait
 ## leur moyenne nationale)
 dv <- d[,vars]
-moyennes <- apply(dv, 2, mean)
+## Pourcentages obtenus au niveau national
+moyennes <- c(17.9, 27.18, 1.79, 9.13, 28.63, 2.31, 11.1, 1.15, 0.56, 0.25, 1.92, 20.52)
 dv <- sweep(dv, 2, moyennes)
 dv$groupes <- groupes.brut
 ## Passage en format "long"
@@ -150,26 +151,44 @@ for (groupe in 1:nb.classes.brut) {
 rgc <- read.csv("data/rgc.csv")
   
 tmp.rgc <- rgc[,c("id","long","lat")]
-tmp.d <- d[,c("nom","id.com", vars)]
-tmp.d$groupes <- groupes.brut
+tmp.d <- d[,c("nom","id.com", "inscr", vars)]
 tmp.d[,vars] <- round(tmp.d[,vars],1)
+tmp.d$groupes <- groupes.brut
+
+## On ajoute les écarts à la moyenne nationale 
+tmp.dv <- d[,vars]
+moyennes <- c(17.9, 27.18, 1.79, 9.13, 28.63, 2.31, 11.1, 1.15, 0.56, 0.25, 1.92, 20.52)
+tmp.dv <- sweep(tmp.dv, 2, moyennes)
+names(tmp.dv) <- paste0("ecart.", names(tmp.dv))
+tmp.dv <- round(tmp.dv,1)
+## On fusionne les deux
+tmp.d <- cbind(tmp.d, tmp.dv)
 
 geo <- merge(tmp.rgc, tmp.d, by.x="id", by.y="id.com", all.x=FALSE, all.y=FALSE)
 
 ## Noms des marqueurs pour les différents groupes
-geo$marker[geo$groupes==1] <- "ltblu_circle"
-geo$marker[geo$groupes==2] <- "wht_circle"
-geo$marker[geo$groupes==3] <- "grn_circle"
-geo$marker[geo$groupes==4] <- "red_circle"
-geo$marker[geo$groupes==5] <- "orange_circle"
-geo$marker[geo$groupes==6] <- "pink_circle"
-geo$marker[geo$groupes==7] <- "ylw_circle"
-geo$marker[geo$groupes==8] <- "blu_circle"
+## geo$marker[geo$groupes==1] <- "ltblu_circle"
+## geo$marker[geo$groupes==2] <- "wht_circle"
+## geo$marker[geo$groupes==3] <- "grn_circle"
+## geo$marker[geo$groupes==4] <- "red_circle"
+## geo$marker[geo$groupes==5] <- "orange_circle"
+## geo$marker[geo$groupes==6] <- "pink_circle"
+## geo$marker[geo$groupes==7] <- "ylw_circle"
+## geo$marker[geo$groupes==8] <- "blu_circle"
+
+geo$marker[geo$groupes==1] <- "measle_turquoise"
+geo$marker[geo$groupes==2] <- "measle_grey"
+geo$marker[geo$groupes==3] <- "small_green"
+geo$marker[geo$groupes==4] <- "small_red"
+geo$marker[geo$groupes==5] <- "measle_brown"
+geo$marker[geo$groupes==6] <- "small_purple"
+geo$marker[geo$groupes==7] <- "small_yellow"
+geo$marker[geo$groupes==8] <- "small_blue"
 
             
 
 ## Export CSV pour import dans Fusion table
-write.csv(geo, file="out/export_fusion_table.csv")
+write.csv(geo, file="results/export_fusion_table.csv")
   
 ## Pour mémoire, code HTML pour l'affichage des info-window
 ## dans Google Maps :
