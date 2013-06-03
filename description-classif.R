@@ -21,9 +21,9 @@ out.path <- "~/projets/data.nozav.org/images/"
 ######################################################################
 
 ## Chargement des données
-load("out/d.rda") ## d
+load("results/d.rda") ## d
 ## Chargement du résultat de la classification
-load("out/hc_brut_ward.rda") ## hc.brut.ward
+load("results/hc_brut_ward.rda") ## hc.brut.ward
 
 ## Affichage du dendrogramme
 png(file=paste0(out.path,"ccp_dendro.png"),width=600,height=500)

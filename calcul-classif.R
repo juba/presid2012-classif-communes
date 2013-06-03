@@ -86,6 +86,6 @@ hc.brut.ward <- hclust(dist.brut,method="ward")
 #####Export des données
 ######################################################################
 
-save(hc.brut.ward, file="out/hc_brut_ward.rda")
-save(d, file="out/d.rda")
+save(hc.brut.ward, file="results/hc_brut_ward.rda")
+save(d, file="results/d.rda")
 
