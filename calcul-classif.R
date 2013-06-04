@@ -48,13 +48,14 @@ d$voix.dupont_aignan <- ds$Voix.8
 d$voix.hollande <- ds$Voix.9
 
 ## Suppression des Collectivités d'outre-mer et français de l'étranger
-## on ne garde que les DOM
+## on ne garde que la métropole
 d <- d[!(d$dpt %in% c("ZA","ZB","ZC","ZD","ZM","ZN","ZP","ZS","ZW","ZX","ZZ")),]  
 
 ## Suppression des 3 communes annulées par le conseil constitutionnel
 d <- d[!(rownames(d) %in% c("10.Pont-sur-Seine","31.Bourg-d'Oueil","43.Lissac")),]
 
 ## Calcul des variables de pourcentage pour chaque candidat
+## Les pourcentages sont calculés sur les votants, et non sur les exprimés
 d$abst <- d$voix.abst / d$inscr * 100
 noms <- c("blancs","joly","lepen","sarkozy","melenchon","poutou",
           "arthaud","cheminade","bayrou","dupont_aignan","hollande") 
