@@ -1,18 +1,6 @@
 #+TITLE: Présidentielles 2012
 
 
-* Todolist
-
-** Carte interactive 
-*** TODO Ajouter écarts et inscrits sur Carte Google
-*** TODO Modifier markers en points ?
-
-** Descriptif
-*** TODO Supprimer contour cartes densité
-*** TODO Ajouter popover d'aide pour graphiques
-
-
-
 * Sources
 
 ** Résultats du premier tour de la présidentielle par commune

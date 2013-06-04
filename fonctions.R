@@ -53,9 +53,11 @@ diffmatrix.plot <- function(m, seuil.diff=0, levels, labels, title=NULL) {
   ggplot(data=subset(mm, !is.na(value))) +
     geom_tile(aes(x=Var1, y=Var2,fill=value), colour="white") +
     scale_fill_gradient2(low="blue", mid="white", high="red") +
-    geom_text(aes(x=Var1, y=Var2,label=value), size=4) +
+    geom_text(aes(x=Var1, y=Var2,label=value), size=5) +
     scale_y_continuous(breaks=1:max(mm$Var2)) +
-    theme(legend.position="none", axis.text.x=element_text(angle=45,hjust=1,vjust=1,size=12)) +
+    theme_gray(base_size = 14) +
+    theme(legend.position="none",
+          axis.text.x=element_text(angle=45,hjust=1,vjust=1,size=15)) +
     xlab("") + ylab("Groupe") + labs(title=title)
 }
 
@@ -69,7 +71,7 @@ groupes.density <- function(df, groupe) {
     geom_density(aes(x=value, fill=variable, color=variable, alpha=0.6)) +
     geom_vline(xintercept=0, linetype=2) +
     facet_grid(variable~., scales="free") +
-    scale_x_continuous(limits=c(-23,23), name="Écart à la moyenne nationale") +
+    scale_x_continuous(limits=c(-23,23), name="Écart à la moyenne globale") +
     scale_y_continuous(breaks=NULL, name="") +
     theme(legend.position="none", strip.text.y=element_text(size=11,angle=0)) +
     labs(title="") +
@@ -89,13 +91,16 @@ ggplot(data=tmp, aes(long,lat)) +
   borders("france", size=0.3, colour="grey30") +
   geom_point(color=couleurs[groupe],size=1.5) +
   geom_density2d(color="black") +
+  scale_y_continuous(lim=c(41.2,51.7)) +
   theme_bw() +
   coord_map() +
   labs(title="") +
   theme(legend.position="none",
-       axis.ticks = element_blank(), 
-       axis.title.y = element_blank(), 
-       axis.text.y =  element_blank(),
-       axis.title.x = element_blank(), 
-       axis.text.x =  element_blank()) 
+        axis.ticks = element_blank(), 
+        axis.title.y = element_blank(), 
+        axis.text.y =  element_blank(),
+        axis.title.x = element_blank(), 
+        axis.text.x =  element_blank(),
+        panel.border = element_blank(),
+        panel.grid = element_blank()) 
 }

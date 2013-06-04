@@ -4,13 +4,9 @@
 
 
 library(stringr)
-library(ggplot2)
-library(rgrs)
-library(grid)
-library(reshape2)
 
 ## Chargement des fonctions
-source("fonctions.R")
+##source("fonctions.R")
 
 
 ######################################################################

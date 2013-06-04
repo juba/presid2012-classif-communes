@@ -1,2 +1,12 @@
 Essai de classification des communes de France selon les votes au premier tour
 de l'élection présidentielle.
+
+- =data= contient les fichiers de données source
+- =results= contient les données produites par l'analyse
+- =fonctions.R= est un fichier de fonctions sourcé par les deux autres scripts
+- =calcul-classif.R= effectue la préparation des données et le calcul de la
+  classification
+- =description-classif.R= effectue un découpage en 8 groupes et produit les
+  graphiques et sorties pour l'analyse
+
+Pour plus d'informations : http://data.nozav.org/posts/2013-05-classification-communes.html
